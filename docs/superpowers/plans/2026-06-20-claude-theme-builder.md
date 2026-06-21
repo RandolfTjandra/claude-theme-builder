@@ -12,7 +12,7 @@
 
 - Single file `index.html`; no external requests, no `fetch`, no CDN, no npm. (Acceptance #1.)
 - Must run when opened via `file://` with zero console errors.
-- All ~58 theme keys appear exactly once across the adjuster groups and are each referenced by ≥1 preview element. (Acceptance #2, #6.)
+- All 57 theme keys appear exactly once across the adjuster groups and are each referenced by ≥1 preview element. (Acceptance #2, #6.)
 - Export shape is exactly `{ name, base, overrides }`; hex values UPPERCASE `#RRGGBB`; `JSON.stringify(state, null, 2)`. (Acceptance #5.)
 - Clipboard write uses `navigator.clipboard.writeText` with a `document.execCommand('copy')` textarea fallback (for `file://`).
 - The 4 base names: `dark-ansi`, `light-ansi`, `dark`, `light`. Default `dark-ansi`.
@@ -110,7 +110,7 @@ git add index.html && git commit -m "feat: html shell, layout, self-check harnes
 In `init()` replace the TODO check with:
 
 ```js
-check('schema has 58 unique keys', ()=> CTB.ALL_KEYS.length===58 && new Set(CTB.ALL_KEYS).size===58);
+check('schema has 57 unique keys', ()=> CTB.ALL_KEYS.length===57 && new Set(CTB.ALL_KEYS).size===57);
 ```
 
 - [ ] **Step 2: Run to verify it fails**
@@ -166,7 +166,7 @@ CTB.ALL_KEYS = CTB.SCHEMA.flatMap(g=>g.keys.map(k=>k.key));
 
 - [ ] **Step 4: Run to verify it passes**
 
-Reload. Expected: `checks 2/2` green. In console run `CTB.ALL_KEYS.length` → `58`.
+Reload. Expected: `checks 2/2` green. In console run `CTB.ALL_KEYS.length` → `57`.
 
 - [ ] **Step 5: Commit**
 
@@ -285,7 +285,7 @@ git add index.html && git commit -m "feat: base palettes, ansi map, color resolu
 
 ```js
 check('controls render a row per key', ()=>
-  document.querySelectorAll('#controls [data-key]').length===58);
+  document.querySelectorAll('#controls [data-key]').length===57);
 check('applyVars sets a css var', ()=>
   getComputedStyle(document.getElementById('preview')).getPropertyValue('--ck-text').trim()!=='');
 ```
@@ -663,7 +663,7 @@ self-check count (should be all green).
 
 Open `index.html` and verify each:
 1. Loads with no console **errors**; self-check all green; no network in devtools.
-2. 58 rows; filter narrows the list; each row edits.
+2. 57 rows; filter narrows the list; each row edits.
 3. Editing repaints the matching preview surface.
 4. Each of the 11 presets loads (name/base/pickers/preview update).
 5. Copy JSON → clipboard parses; load dracula → export → `overrides.cyan_FOR_SUBAGENTS_ONLY==="#8BE9FD"`.
