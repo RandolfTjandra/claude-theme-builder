@@ -34,7 +34,10 @@
   #preview [data-uses]:hover{outline:1px dashed var(--ck-warning,#eb0);outline-offset:1px}
   .pv-brand{color:var(--ck-claude);font-weight:700}
   .pv-spin{color:var(--ck-claudeBlue_FOR_SYSTEM_SPINNER)}
-  .pv-mascot{display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--ck-clawd_body);outline:2px solid var(--ck-clawd_background);vertical-align:middle;margin-right:4px}
+  .pv-clawd{display:grid;width:max-content;margin:0 0 10px;line-height:0}
+  .pv-clawd i{width:10px;height:10px;display:block}
+  .pv-clawd i.b{background:var(--ck-clawd_body)}      /* body */
+  .pv-clawd i.e{background:var(--ck-clawd_background)} /* eyes: clawd_background seen through the holes */
   .pv-lblC{color:var(--ck-briefLabelClaude);font-weight:700}
   .pv-lblY{color:var(--ck-briefLabelYou);font-weight:700}
   .pv-you{background:var(--ck-userMessageBackground);border-radius:6px;padding:3px 7px;display:inline-block}
@@ -451,8 +454,30 @@ function renderPreview(){
     `<div class="pv-shrow"><span class="lbl">${a} → ${b}</span>`+
     `<span class="pv-sh" data-uses="${a} ${b}" style="--sh-a:var(--ck-${a});--sh-b:var(--ck-${b})">${t}</span></div>`
   ).join('');
-  document.getElementById('preview').innerHTML=`
-  <div class="seg"><span class="pv-mascot" data-uses="clawd_body clawd_background"></span>`+
+  // Clawd as a 13-wide pixel grid. R = body (clawd_body), E = eye hole (clawd_background shows through), space = transparent.
+  /**
+ ▐▛███▜▌
+▝▜█████▛▘
+  ▘▘ ▝▝
+  */
+  const CLAWD=[
+    "..RRRRRRRRRRRR..",
+    "..RRRRRRRRRRRR..",
+    "..RRERRRRRRERR..",
+    "..RRERRRRRRERR..",
+    "RRRRRRRRRRRRRRRR",
+    "RRRRRRRRRRRRRRRR",
+    "..RRRRRRRRRRRR..",
+    "..RRRRRRRRRRRR..",
+    "...R.R....R.R...",
+    "...R.R....R.R..."
+  ];
+  const CW=CLAWD[0].length; // columns follow the map width — widen the drawing by making every row longer
+  const clawd='<div class="pv-clawd" data-uses="clawd_body clawd_background" aria-label="Clawd mascot" style="grid-template-columns:repeat('+CW+',10px)">'+
+    CLAWD.join('').split('').map(c=> c==='R'?'<i class="b"></i>': c==='E'?'<i class="e"></i>':'<i></i>').join('')+'</div>';
+  document.getElementById('preview').innerHTML=
+    clawd+`
+  <div class="seg">`+
     `<span class="pv-brand" data-uses="claude claudeShimmer background">✻ Claude</span> `+
     `<span class="pv-spin" data-uses="claudeBlue_FOR_SYSTEM_SPINNER claudeBlueShimmer_FOR_SYSTEM_SPINNER">⠋ working…</span></div>
   <div class="seg"><span class="pv-lblC" data-uses="briefLabelClaude">Claude</span> `+
