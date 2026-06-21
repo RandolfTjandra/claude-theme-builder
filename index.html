@@ -30,9 +30,49 @@ function runChecks(){
   const el=document.getElementById('selfcheck');
   if(el) el.textContent = `checks ${pass}/${total}`, el.style.color = pass===total ? '#a6e3a1':'#f38ba8';
 }
+CTB.SCHEMA = [
+ {group:'Text & Input', keys:[
+   {key:'text',hint:'Primary text'},{key:'inverseText',hint:'Text on accent bg'},
+   {key:'inactive',hint:'Dimmed/disabled text'},{key:'inactiveShimmer',hint:'Dimmed shimmer'},
+   {key:'subtle',hint:'Secondary/muted text'},{key:'suggestion',hint:'Autocomplete match highlight'},
+   {key:'promptBorder',hint:'Input box border'},{key:'promptBorderShimmer',hint:'Input border shimmer'},
+   {key:'selectionBg',hint:'Selected row background'}]},
+ {group:'Brand & Spinner', keys:[
+   {key:'claude',hint:'Claude accent'},{key:'claudeShimmer',hint:'Claude accent shimmer'},
+   {key:'claudeBlue_FOR_SYSTEM_SPINNER',hint:'System spinner'},{key:'claudeBlueShimmer_FOR_SYSTEM_SPINNER',hint:'Spinner shimmer'},
+   {key:'background',hint:'Brand/Claude bg accent'},{key:'clawd',hint:'Mascot accent'},{key:'clawd_body',hint:'Mascot body'},{key:'clawd_background',hint:'Mascot bg'}]},
+ {group:'Modes & Status', keys:[
+   {key:'planMode',hint:'Plan-mode accent'},{key:'ide',hint:'IDE/session indicator'},
+   {key:'permission',hint:'Permission dialog'},{key:'permissionShimmer',hint:'Permission shimmer'},
+   {key:'autoAccept',hint:'Auto-accept mode'},{key:'autoAcceptShimmer',hint:'Auto-accept shimmer'},
+   {key:'merged',hint:'Merged/accept-all'},{key:'remember',hint:'Memory accent'},{key:'skill',hint:'Skill accent'},
+   {key:'effortUltra',hint:'Ultra effort'},{key:'fastMode',hint:'Fast mode'},{key:'fastModeShimmer',hint:'Fast shimmer'},
+   {key:'professionalBlue',hint:'Pro/privacy blue'},{key:'chromeYellow',hint:'Chrome-extension yellow'}]},
+ {group:'Feedback', keys:[
+   {key:'success',hint:'Success'},{key:'error',hint:'Error'},{key:'warning',hint:'Warning'},{key:'warningShimmer',hint:'Warning shimmer'}]},
+ {group:'Messages', keys:[
+   {key:'briefLabelYou',hint:'"You" label'},{key:'briefLabelClaude',hint:'"Claude" label'},
+   {key:'userMessageBackground',hint:'Your message bg'},{key:'userMessageBackgroundHover',hint:'Your message bg (hover)'}]},
+ {group:'Diffs', keys:[
+   {key:'diffAdded',hint:'Added line bg'},{key:'diffRemoved',hint:'Removed line bg'},
+   {key:'diffAddedDimmed',hint:'Added bg dimmed'},{key:'diffRemovedDimmed',hint:'Removed bg dimmed'},
+   {key:'diffAddedWord',hint:'Added word'},{key:'diffRemovedWord',hint:'Removed word'}]},
+ {group:'Backgrounds', keys:[
+   {key:'bashBorder',hint:'Bash mode border'},{key:'bashMessageBackgroundColor',hint:'Bash message bg'},
+   {key:'memoryBackgroundColor',hint:'Memory box bg'}]},
+ {group:'Rate limit', keys:[
+   {key:'rate_limit_fill',hint:'Used portion'},{key:'rate_limit_empty',hint:'Remaining portion'}]},
+ {group:'Subagent colors', keys:[
+   {key:'red_FOR_SUBAGENTS_ONLY',hint:'Agent: red'},{key:'blue_FOR_SUBAGENTS_ONLY',hint:'Agent: blue'},
+   {key:'green_FOR_SUBAGENTS_ONLY',hint:'Agent: green'},{key:'yellow_FOR_SUBAGENTS_ONLY',hint:'Agent: yellow'},
+   {key:'purple_FOR_SUBAGENTS_ONLY',hint:'Agent: purple'},{key:'orange_FOR_SUBAGENTS_ONLY',hint:'Agent: orange'},
+   {key:'pink_FOR_SUBAGENTS_ONLY',hint:'Agent: pink'},{key:'cyan_FOR_SUBAGENTS_ONLY',hint:'Agent: cyan (default session)'}]},
+];
+CTB.SCHEMA.forEach(g=>g.keys.forEach(k=> k.label = k.label || k.key));
+CTB.ALL_KEYS = CTB.SCHEMA.flatMap(g=>g.keys.map(k=>k.key));
 function init(){
   check('harness wired', ()=> typeof runChecks==='function');
-  check('TODO: schema loaded', ()=> false); // replaced in Task 2
+  check('schema has 58 unique keys', ()=> CTB.ALL_KEYS.length===58 && new Set(CTB.ALL_KEYS).size===58);
   runChecks();
 }
 document.addEventListener('DOMContentLoaded', init);
