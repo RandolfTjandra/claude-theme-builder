@@ -2,6 +2,15 @@
 
 A single-file, dependency-free tool to build a Claude Code custom theme visually.
 
+## Demo
+
+[![Claude Theme Builder — 20-second promo](promo/poster.jpg)](promo/claude-theme-builder-promo.mp4)
+
+▶ **[Watch the 20-second promo](promo/claude-theme-builder-promo.mp4)** (1080p, with sound) — a
+quick tour of the 57 keys, all 11 presets, and Clawd repainting live. It's built
+entirely from this project's real data; the whole pipeline lives in
+[`promo/`](promo/) (`node render.mjs` → `ffmpeg`).
+
 ## Use
 
 Open `index.html` in any browser (double-click it). Then:
