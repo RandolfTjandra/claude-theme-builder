@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Theme Builder</title>
+<style>
+  :root{--bg:#1e1e2e;--fg:#cdd6f4;--panel:#181825;--line:#313244}
+  *{box-sizing:border-box} html,body{margin:0;height:100%}
+  body{background:var(--bg);color:var(--fg);font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
+  #app{display:grid;grid-template-rows:auto 1fr auto;height:100vh}
+  #topbar{display:flex;gap:12px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  #main{display:grid;grid-template-columns:minmax(320px,420px) 1fr;min-height:0}
+  #controls{overflow:auto;border-right:1px solid var(--line);padding:8px}
+  #preview-wrap{overflow:auto;padding:16px}
+  #jsonpane{border-top:1px solid var(--line);max-height:30vh;overflow:auto}
+  #jsonpane[hidden]{display:none}
+  @media(max-width:900px){#main{grid-template-columns:1fr}}
+  #selfcheck{font-size:11px;opacity:.7;margin-left:auto}
+</style></head>
+<body><div id="app">
+  <div id="topbar"><strong>Claude Theme Builder</strong><span id="selfcheck"></span></div>
+  <div id="main"><div id="controls"></div><div id="preview-wrap"><div id="preview"></div></div></div>
+  <pre id="jsonpane" hidden></pre>
+</div>
+<script>
+const CTB = window.CTB = { checks: [] };
+function check(name, fn){ let ok=false; try{ ok=!!fn(); }catch(e){ ok=false; } CTB.checks.push({name, ok}); }
+function runChecks(){
+  const pass = CTB.checks.filter(c=>c.ok).length, total = CTB.checks.length;
+  CTB.checks.forEach(c=>!c.ok && console.error('CHECK FAIL:', c.name));
+  console.log(`self-checks: ${pass}/${total}`);
+  const el=document.getElementById('selfcheck');
+  if(el) el.textContent = `checks ${pass}/${total}`, el.style.color = pass===total ? '#a6e3a1':'#f38ba8';
+}
+function init(){
+  check('harness wired', ()=> typeof runChecks==='function');
+  check('TODO: schema loaded', ()=> false); // replaced in Task 2
+  runChecks();
+}
+document.addEventListener('DOMContentLoaded', init);
+</script></body></html>
