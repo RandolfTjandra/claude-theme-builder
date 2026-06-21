@@ -10,7 +10,8 @@ Open `index.html` in any browser (double-click it). Then:
   grouped by surface (Text & Input, Brand & Spinner, Modes & Status, Messages,
   Diffs, Backgrounds, Rate limit, Subagent colors).
 - Watch the **fake Claude Code CLI** on the right repaint live. Hover any surface
-  to see which key(s) it uses.
+  to see which key(s) it uses, or **click** it to scroll the key list to — and
+  flash — the control(s) that drive its color.
 - **Load preset…** to start from one of the 11 bundled themes (dracula, nord,
   tokyo-night, catppuccin, gruvbox, everforest, rose-pine, solarized, one-dark),
   then remix.
@@ -31,3 +32,7 @@ dotfiles `claude/themes/` directory) and select it with `/theme`.
 Runs entirely offline from `file://` — no build, no install, no network. The
 top-right shows a self-check count (all green = healthy). The key list and base
 palettes were extracted from the Claude Code binary.
+
+## License
+
+[MIT](LICENSE) © 2026 Randolf Tjandra
