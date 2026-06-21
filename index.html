@@ -40,7 +40,7 @@ CTB.SCHEMA = [
  {group:'Brand & Spinner', keys:[
    {key:'claude',hint:'Claude accent'},{key:'claudeShimmer',hint:'Claude accent shimmer'},
    {key:'claudeBlue_FOR_SYSTEM_SPINNER',hint:'System spinner'},{key:'claudeBlueShimmer_FOR_SYSTEM_SPINNER',hint:'Spinner shimmer'},
-   {key:'background',hint:'Brand/Claude bg accent'},{key:'clawd',hint:'Mascot accent'},{key:'clawd_body',hint:'Mascot body'},{key:'clawd_background',hint:'Mascot bg'}]},
+   {key:'background',hint:'Brand/Claude bg accent'},{key:'clawd_body',hint:'Mascot body'},{key:'clawd_background',hint:'Mascot bg'}]},
  {group:'Modes & Status', keys:[
    {key:'planMode',hint:'Plan-mode accent'},{key:'ide',hint:'IDE/session indicator'},
    {key:'permission',hint:'Permission dialog'},{key:'permissionShimmer',hint:'Permission shimmer'},
@@ -72,7 +72,7 @@ CTB.SCHEMA.forEach(g=>g.keys.forEach(k=> k.label = k.label || k.key));
 CTB.ALL_KEYS = CTB.SCHEMA.flatMap(g=>g.keys.map(k=>k.key));
 function init(){
   check('harness wired', ()=> typeof runChecks==='function');
-  check('schema has 58 unique keys', ()=> CTB.ALL_KEYS.length===58 && new Set(CTB.ALL_KEYS).size===58);
+  check('schema has 57 unique keys', ()=> CTB.ALL_KEYS.length===57 && new Set(CTB.ALL_KEYS).size===57);
   runChecks();
 }
 document.addEventListener('DOMContentLoaded', init);
