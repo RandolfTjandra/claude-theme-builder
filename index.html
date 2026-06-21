@@ -63,6 +63,17 @@
   .pv-rl>i{display:block;height:100%;width:55%;border-radius:4px;background:var(--ck-rate_limit_fill)}
   .pv-chip{display:inline-block;padding:1px 7px;border-radius:10px;margin:2px 3px 2px 0;border:1px solid currentColor;font-size:12px}
   .pv-agent{display:inline-block;padding:1px 7px;border-radius:4px;margin:2px 3px 2px 0;font-weight:700}
+  .pv-shtitle{color:var(--ck-subtle);font-size:11px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+  .pv-shrow{display:grid;grid-template-columns:230px 1fr;gap:8px;align-items:center;margin:2px 0}
+  .pv-shrow .lbl{color:var(--ck-inactive);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  @keyframes ctb-shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+  .pv-sh{font-weight:700;
+    background:linear-gradient(100deg,var(--sh-a) 25%,var(--sh-b) 50%,var(--sh-a) 75%);
+    background-size:200% 100%;-webkit-background-clip:text;background-clip:text;
+    color:transparent;-webkit-text-fill-color:transparent;
+    animation:ctb-shimmer 2.4s linear infinite}
+  @media (prefers-reduced-motion:reduce){
+    .pv-sh{animation:none;background:none;color:var(--sh-a);-webkit-text-fill-color:var(--sh-a)}}
 </style></head>
 <body><div id="app">
   <div id="topbar"><strong>Claude Theme Builder</strong><span id="selfcheck"></span></div>
@@ -427,6 +438,19 @@ function renderControls(){
 function renderPreview(){
   const agents=['red','blue','green','yellow','purple','orange','pink','cyan']
     .map(c=>`<span class="pv-agent" data-uses="${c}_FOR_SUBAGENTS_ONLY" style="color:var(--ck-${c}_FOR_SUBAGENTS_ONLY)">${c}</span>`).join('');
+  const shimmers=[
+    ['claude','claudeShimmer','✻ Claude thinking…'],
+    ['claudeBlue_FOR_SYSTEM_SPINNER','claudeBlueShimmer_FOR_SYSTEM_SPINNER','⠋ Working…'],
+    ['inactive','inactiveShimmer','type a message…'],
+    ['promptBorder','promptBorderShimmer','──────── input border ────────'],
+    ['permission','permissionShimmer','› Allow this edit?'],
+    ['autoAccept','autoAcceptShimmer','auto-accept edits ⇧⇥'],
+    ['fastMode','fastModeShimmer','⚡ fast mode on'],
+    ['warning','warningShimmer','⚠ approaching rate limit']
+  ].map(([a,b,t])=>
+    `<div class="pv-shrow"><span class="lbl">${a} → ${b}</span>`+
+    `<span class="pv-sh" data-uses="${a} ${b}" style="--sh-a:var(--ck-${a});--sh-b:var(--ck-${b})">${t}</span></div>`
+  ).join('');
   document.getElementById('preview').innerHTML=`
   <div class="seg"><span class="pv-mascot" data-uses="clawd_body clawd_background"></span>`+
     `<span class="pv-brand" data-uses="claude claudeShimmer background">✻ Claude</span> `+
@@ -453,6 +477,7 @@ function renderPreview(){
   <div class="seg">${agents}</div>
   <div class="seg pv-mem" data-uses="memoryBackgroundColor"><b data-uses="remember">⏺ remembered</b> a fact</div>
   <div class="seg"><div class="pv-rl" data-uses="rate_limit_empty"><i data-uses="rate_limit_fill"></i></div></div>
+  <div class="seg"><div class="pv-shtitle">Shimmer effects (animated)</div>${shimmers}</div>
   <div class="seg">
     <span class="pv-chip" data-uses="skill" style="color:var(--ck-skill)">skill</span>`+
     `<span class="pv-chip" data-uses="fastMode" style="color:var(--ck-fastMode)">fast</span>`+
